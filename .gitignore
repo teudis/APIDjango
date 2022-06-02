@@ -1,2 +1,5 @@
 # Ignore folder create by pycharm
 .idea
+
+# Ignore DataBases in Sqlite
+db.sqlite3
