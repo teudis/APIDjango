@@ -13,5 +13,7 @@ class DroneSerializer(serializers.ModelSerializer):
 
     def validate_battery_capacity(self, value):
         if int(value) < 1 or int(value) > 100:
-             raise serializers.ValidationError('Your Battery capacity must be between 1 to 10 percentage.')
+            raise serializers.ValidationError('Your Battery capacity must be between 1 to 10 percentage.')
+        if int(value) < 25:
+            raise serializers.ValidationError('Your Battery capacity cannot below 25%')
         return value
