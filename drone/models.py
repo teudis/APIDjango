@@ -2,6 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 import re
 
+
 # Create your models here.
 class Drone(models.Model):
     MODEL_DRONE = (
@@ -28,6 +29,7 @@ class Drone(models.Model):
     def __str__(self):
         return self.serial_number
 
+
 class Medication(models.Model):
     name = models.CharField(max_length=50)
     weight = models.CharField(max_length=30)
@@ -49,3 +51,30 @@ class Medication(models.Model):
         self.full_clean()
         return super().save(*args, **kwargs)
 
+
+class DispacherDrone(models.Model):
+    drone = models.ForeignKey(Drone, on_delete=models.CASCADE)
+    medications = models.ManyToManyField(Medication)
+    created = models.DateTimeField(auto_now_add=True)
+    update = models.DateTimeField(auto_now=True)
+    total = models.FloatField(editable=False, blank=True, default=0)
+
+    def __str__(self):
+        return self.drone + "--" + self.created + "--" + self.total
+
+    def clean(self):
+        self.total = 0
+        if not self.pk is None:
+            for med in self.medications.all():
+                self.total += med.price
+            if self.total > self.drone.weight:
+                raise ValidationError({'Total': "The weight of the medication not be upper to the drone weight limit"})
+
+    def save(self, *args, **kwargs):
+        self.total = 0
+        if self.pk is None:
+            super(DispacherDrone, self).save(*args, **kwargs)
+        for med in self.medications.all():
+            self.total += med.price
+        self.full_clean()
+        super(DispacherDrone, self).save(*args, **kwargs)
