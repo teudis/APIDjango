@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+import re
 
 # Create your models here.
 class Drone(models.Model):
@@ -34,3 +36,16 @@ class Medication(models.Model):
 
     def __str__(self):
         return self.name
+
+    def clean(self):
+        if not re.match("^[A-Za-z0-9_-]*$", self.name):
+            raise ValidationError(
+                {'name ': "Name should have only letters, numbers, ‘-‘, ‘_’"})
+        if not re.match("^[A-Z0-9_]*$", self.code):
+            raise ValidationError(
+                {'code': "Code should have  only upper case letters, underscore and numbers"})
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
+
