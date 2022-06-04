@@ -27,7 +27,7 @@ class Drone(models.Model):
     state = models.CharField(max_length=20, choices=DRONE_STATUS)
 
     def __str__(self):
-        return self.serial_number
+        return "Serial Number:" + self.serial_number + "---" + "Weigth:" + self.weight
 
 
 class Medication(models.Model):
@@ -37,7 +37,7 @@ class Medication(models.Model):
     picture = models.ImageField(upload_to='medications/photos')
 
     def __str__(self):
-        return self.name
+        return "Name:" + self.name + "---" + "Weigth:" + self.weight
 
     def clean(self):
         if not re.match("^[A-Za-z0-9_-]*$", self.name):
@@ -68,7 +68,7 @@ class DispacherDrone(models.Model):
             for med in self.medications.all():
                 self.total += float(med.weight)
             if self.total > int(self.drone.weight):
-                raise ValidationError({'Total': "The weight of the medication not be upper to the drone weight limit"})
+                raise ValidationError({'total': "The weight of the medication not be upper to the drone weight limit"})
 
     def save(self, *args, **kwargs):
         self.total = 0
