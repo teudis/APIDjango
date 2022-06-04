@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Drone
+from .models import Drone, DispacherDrone
 
 class DroneSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,3 +17,9 @@ class DroneSerializer(serializers.ModelSerializer):
         if int(value) < 25:
             raise serializers.ValidationError('Your Battery capacity cannot below 25%')
         return value
+
+
+class DispatcherDroneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DispacherDrone
+        fields = ('drone', 'medications',)
