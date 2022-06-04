@@ -34,7 +34,7 @@ class Medication(models.Model):
     name = models.CharField(max_length=50)
     weight = models.CharField(max_length=30)
     code = models.CharField(max_length=5)
-    picture = models.CharField(max_length=200)
+    picture = models.ImageField(upload_to='medications/photos')
 
     def __str__(self):
         return self.name
