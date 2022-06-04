@@ -68,7 +68,7 @@ class DispacherDrone(models.Model):
             for med in self.medications.all():
                 self.total += float(med.weight)
             if self.total > int(self.drone.weight):
-                raise ValidationError({'total': "The weight of the medication not be upper to the drone weight limit"})
+                raise ValidationError({'medications': "The weight of the medication not be upper to the drone weight limit"})
 
     def save(self, *args, **kwargs):
         self.total = 0
