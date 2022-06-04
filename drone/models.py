@@ -60,14 +60,14 @@ class DispacherDrone(models.Model):
     total = models.FloatField(editable=False, blank=True, default=0)
 
     def __str__(self):
-        return self.drone + "--" + self.created + "--" + self.total
+        return self.drone.serial_number + "--" + str(self.created) + "--" + str(self.total)
 
     def clean(self):
         self.total = 0
         if not self.pk is None:
             for med in self.medications.all():
-                self.total += med.price
-            if self.total > self.drone.weight:
+                self.total += float(med.weight)
+            if self.total > int(self.drone.weight):
                 raise ValidationError({'Total': "The weight of the medication not be upper to the drone weight limit"})
 
     def save(self, *args, **kwargs):
@@ -75,6 +75,6 @@ class DispacherDrone(models.Model):
         if self.pk is None:
             super(DispacherDrone, self).save(*args, **kwargs)
         for med in self.medications.all():
-            self.total += med.price
+            self.total += float(med.weight)
         self.full_clean()
         super(DispacherDrone, self).save(*args, **kwargs)
