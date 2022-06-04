@@ -42,7 +42,7 @@ class Medication(models.Model):
     def clean(self):
         if not re.match("^[A-Za-z0-9_-]*$", self.name):
             raise ValidationError(
-                {'name ': "Name should have only letters, numbers, ‘-‘, ‘_’"})
+                {'name': "Name should have only letters, numbers, ‘-‘, ‘_’"})
         if not re.match("^[A-Z0-9_]*$", self.code):
             raise ValidationError(
                 {'code': "Code should have  only upper case letters, underscore and numbers"})
