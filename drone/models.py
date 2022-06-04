@@ -20,7 +20,7 @@ class Drone(models.Model):
         ('RETURNING', 'RETURNING'),
     )
 
-    serial_number = models.CharField(max_length=100)
+    serial_number = models.CharField(unique=True, max_length=100)
     weight = models.CharField(max_length=4)
     battery_capacity = models.CharField(max_length=3)
     model_drone = models.CharField(max_length=20, choices=MODEL_DRONE)
@@ -33,7 +33,7 @@ class Drone(models.Model):
 class Medication(models.Model):
     name = models.CharField(max_length=50)
     weight = models.CharField(max_length=30)
-    code = models.CharField(max_length=5)
+    code = models.CharField(unique=True, max_length=5)
     picture = models.ImageField(upload_to='medications/photos')
 
     def __str__(self):
