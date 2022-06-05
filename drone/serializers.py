@@ -33,4 +33,10 @@ class DispatcherDroneSerializer(serializers.ModelSerializer):
     medications = MedicationSerializer(many=True)
     class Meta:
         model = DispacherDrone
-        fields = ('drone', 'medications')
+        fields = ('drone', 'medications',)
+
+class DispatcherDroneMedicationSerializer(serializers.ModelSerializer):
+    medications = MedicationSerializer(many=True)
+    class Meta:
+        model = DispacherDrone
+        fields = ('medications',)

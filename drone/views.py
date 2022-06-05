@@ -1,6 +1,6 @@
 from rest_framework import generics
 from .models import Drone, DispacherDrone
-from .serializers import DroneSerializer, DispatcherDroneSerializer, BatteryDroneSerializer
+from .serializers import DroneSerializer, DispatcherDroneSerializer, BatteryDroneSerializer, DispatcherDroneMedicationSerializer
 
 class CreateDrone(generics.CreateAPIView):
     serializer_class = DroneSerializer
@@ -15,6 +15,7 @@ class DetailDrone(generics.RetrieveAPIView):
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
 
+#SHOW BATTERY LEVEL BY DRONE(ID)
 class BatteryDrone(generics.RetrieveAPIView):
     queryset = Drone.objects.only('battery_capacity')
     serializer_class = BatteryDroneSerializer
@@ -24,12 +25,17 @@ class ListDroneLoading(generics.ListAPIView):
     queryset = Drone.objects.filter(state="LOADING")
     serializer_class = DroneSerializer
 
-#Dispacher DRONE
+#CREATE Dispatcher DRONE
 class DispatchDrone(generics.CreateAPIView):
     serializer_class = DispatcherDroneSerializer
 
 
-#Dispacher DRONE
+#LIST Dispatcher DRONE
 class ListDispatchDrone(generics.ListAPIView):
     queryset = DispacherDrone.objects.all()
     serializer_class = DispatcherDroneSerializer
+
+#LIST Medications from Dispatcher DRONE
+class ListMedicationsDispatchDrone(generics.RetrieveAPIView):
+    queryset = DispacherDrone.objects.all()
+    serializer_class = DispatcherDroneMedicationSerializer

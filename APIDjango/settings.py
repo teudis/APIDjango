@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'drone.apps.DroneConfig',
      #3rd party
     'rest_framework',
+    'drf_yasg',
 ]
 
 REST_FRAMEWORK = {

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ListDrone,CreateDrone, DetailDrone, ListDroneLoading, DispatchDrone,ListDispatchDrone , BatteryDrone
+from .views import ListDrone,CreateDrone, DetailDrone, ListDroneLoading, DispatchDrone,ListDispatchDrone , BatteryDrone, ListMedicationsDispatchDrone
 
 urlpatterns = [
     path('<int:pk>/', DetailDrone.as_view(), name='drone_detail'), # details drone
@@ -9,4 +9,5 @@ urlpatterns = [
     path('drone/<int:pk>/check', BatteryDrone.as_view(), name='check_battery_drone'), # Check Battery drone
     path('dispatch/create', DispatchDrone.as_view(), name="create_dispatch"),
     path('dispatch/list', ListDispatchDrone.as_view(), name="list_dispatch"),
+    path('dispatch/<int:pk>/med', ListMedicationsDispatchDrone.as_view(), name='list_medications_by_drone'), # List medicaction by drone
     ]
