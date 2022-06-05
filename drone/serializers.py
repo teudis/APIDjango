@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Drone, DispacherDrone
+from .models import Drone, DispacherDrone, Medication
 
 class DroneSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,7 +19,13 @@ class DroneSerializer(serializers.ModelSerializer):
         return value
 
 
+class MedicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Medication
+        fields = "__all__"
+
 class DispatcherDroneSerializer(serializers.ModelSerializer):
+    medications = MedicationSerializer(many=True)
     class Meta:
         model = DispacherDrone
-        fields = ('drone', 'medications',)
+        fields = ('drone', 'medications')

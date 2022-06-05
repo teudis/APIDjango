@@ -24,6 +24,5 @@ class ListDroneLoading(generics.ListAPIView):
 
 
 #Dispacher DRONE
-class DispatchDrone(generics.ListCreateAPIView):
-    queryset = DispacherDrone.objects.all()
+class DispatchDrone(generics.CreateAPIView):
     serializer_class = DispatcherDroneSerializer
