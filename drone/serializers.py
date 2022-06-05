@@ -18,6 +18,11 @@ class DroneSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('Your Battery capacity cannot below 25%')
         return value
 
+class BatteryDroneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Drone
+        fields = ('battery_capacity',)
+
 
 class MedicationSerializer(serializers.ModelSerializer):
     class Meta:
